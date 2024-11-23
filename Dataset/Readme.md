@@ -1,9 +1,9 @@
 ### 数据格式说明
 
-1. select_and_fill_in_blank 是填空和选择题
-2. open_answer_question是简答题
-3. physics_multiple_choice是物理多选题
-4. english_error_collection是英语改错题
+1. `select_and_fill_in_blank` 是填空和选择题
+2. `open_answer_question`是简答题
+3. `physics_multiple_choice`是物理多选题
+4. `english_error_collection`是英语改错题
 
 > 解释（就是我现在想的是把简答题分一类（比如：数学的大题，或者政治的大题，历史的大题，语文大题）这样子的，然后填空题和选择题分一类。你现在每个学科的json都分出来了，把他们转成jsonl。我现在需要
 
