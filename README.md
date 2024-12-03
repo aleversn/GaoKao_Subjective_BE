@@ -1,6 +1,11 @@
 # SAS Gaokao Benchmark
 
-### API
+### 📇 Project Description
+
+- `RawDataset`: Raw subjective data from [Gaokao Bench](https://github.com/OpenLMLab/GAOKAO-Bench)
+- `ProceedDataset`: Data with annotation. 
+
+### 🌏 API
 
 **Make Config**
 
