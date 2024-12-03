@@ -1,0 +1,5 @@
+tqdm>=4.47.0
+munch>=2.5.0
+numpy>=1.19.5
+fastapi>=0.110.0
+uvicorn[standard]

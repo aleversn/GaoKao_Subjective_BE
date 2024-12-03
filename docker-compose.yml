@@ -1,0 +1,15 @@
+version: '3'
+services:
+  slatex-ocr:
+    build: .
+    ports:
+    - "50052:8000"
+    volumes:
+    - ./:/app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

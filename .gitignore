@@ -1,0 +1,8 @@
+**/**/__pycache__
+model/*.pth
+data/
+tmp/
+save_model/
+data_record/
+test_samples/
+api/app_config.json
