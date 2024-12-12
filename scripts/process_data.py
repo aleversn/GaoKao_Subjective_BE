@@ -1,11 +1,19 @@
 # %%
 import os
 import json
+from tools import *
 
 SOURCE_DIR = '../ProceedDataset/Bad_Student_Answer_Dataset'
 files = os.listdir(SOURCE_DIR)
 
+def denoise(ori):
+    ori = extract_and_replace_tables(ori)
+    ori = replace_display_math(ori)
+    ori = replace_uns_newline(ori)
+    return ori
+
 c_id = 0
+ID_DICT = {}
 for file_item in files:
     if not (file_item.endswith('json') or file_item.endswith('jsonl')):
         continue
@@ -16,6 +24,9 @@ for file_item in files:
         json_data = f.readlines()
     for idx, item in enumerate(json_data):
         json_data[idx] = json.loads(item)
+        json_data[idx]['question'] = denoise(json_data[idx]['question'])
+        json_data[idx]['answer'] = denoise(json_data[idx]['answer'])
+        json_data[idx]['bad_student_answer'] = denoise(json_data[idx]['bad_student_answer'])
     q_id = 0
     for item in json_data:
         item['id'] = f'{course}_{question_type}_{q_id}'
@@ -25,6 +36,10 @@ for file_item in files:
     with open(os.path.join('backend_data', 'question', f'{c_id}_{course}_{question_type}.jsonl'), mode='w+') as f:
         for item in json_data:
             f.write(json.dumps(item, ensure_ascii=False) + '\n')
+    ID_DICT[f'{course}_{question_type}'] = c_id
     c_id += 1
+
+with open(os.path.join('backend_data', 'ID_DICT.json'), mode='w+') as f:
+    json.dump(ID_DICT, f)
 
 # %%

@@ -3,6 +3,7 @@ import sys
 import json
 import shutil
 from fastapi import FastAPI, Header
+from fastapi.middleware.cors import CORSMiddleware
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from api.body import response_body, scoreItem
@@ -10,12 +11,21 @@ from api.body import response_body, scoreItem
 backend_data_dir = '../backend_data'
 question_types = []
 question_dict = {}
+error_type_list = []
 
 
 with open('./app_config.json') as f:
     app_config = json.load(f)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 允许的前端地址
+    allow_credentials=True,  # 是否允许发送 Cookie
+    allow_methods=["*"],  # 允许的 HTTP 方法
+    allow_headers=["*"],  # 允许的请求头
+)
 
 @app.get("/")
 def home():
@@ -66,6 +76,19 @@ async def get_list(id):
         res = response_body(message='not found', data=[])
     else:
         res = response_body(message='success', data=question_dict[id])
+    return res()
+
+@app.get("/get_error_types")
+async def get_error_types():
+    global error_type_list
+    global backend_data_dir
+    if len(list(error_type_list)) <= 0:
+        file_name = os.path.join(backend_data_dir, 'error_type.jsonl')
+        with open(file_name, encoding='utf-8') as f:
+            ori_json = f.readlines()
+        ori_json = [json.loads(item) for item in ori_json]
+        error_type_list = ori_json
+    res = response_body(message='success', data=error_type_list)
     return res()
 
 @app.post("/update_score")
