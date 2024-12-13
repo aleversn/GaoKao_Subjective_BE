@@ -53,13 +53,38 @@ def replace_display_math(latex_string):
     """
     pattern_1 = r"\\\[.*?\\\]"  # 匹配 \[...\] 的内容
     pattern_2 = r"\\\(.*?\\\)"  # 匹配 \(...\) 的内容
-    pattern_3 = r"\$\$(?<!\n)(.+?)(?!\n)\$\$" # 匹配 $$...$$ 不换行公式的内容
+    pattern_3 = r"(?<!\n)\$\$(.+?)\$\$(?!\n)" # 匹配 $$...$$ 不换行公式的内容
     # 使用 re.sub 替换为 $$...$$
     latex_string = re.sub(pattern_1, lambda m: f"$$ {m.group(0)[2:-2].strip()} $$", latex_string, flags=re.DOTALL)
     latex_string = re.sub(pattern_2, lambda m: f"$$ {m.group(0)[2:-2].strip()} $$", latex_string, flags=re.DOTALL)
     latex_string = re.sub(pattern_3, r"$\1$", latex_string)
     # print(latex_string
     return latex_string
+
+def replace_math_newline(latex_string):
+    """
+    将公式中的\n替换为\\
+    """
+    pattern_1 = r"(\$\$.*?\$\$|\$.*?\$)"  # 匹配公式中的内容
+    # 使用 re.sub 替换为 $$...$$
+    latex_string = re.sub(pattern_1, lambda m: m.group(0).replace('\n', '\\\\'), latex_string, flags=re.DOTALL)
+    # print(latex_string
+    return latex_string
+
+def replace_table_newline(html_string):
+    """
+    查找所有 <table>...</table> 的内容，并将其中的 \n 替换为 #@n#。
+
+    :param html_string: 包含 HTML 内容的字符串
+    :return: 处理后的 HTML 字符串
+    """
+    pattern = r"<table.*?>.*?<\/table>"  # 匹配 <table>...</table>
+
+    def replace_newline_in_table(match):
+        table_content = match.group(0)
+        return table_content.replace('\n', '#@n#')
+
+    return re.sub(pattern, replace_newline_in_table, html_string, flags=re.DOTALL)
 
 def replace_uns_newline(latex_string):
     """

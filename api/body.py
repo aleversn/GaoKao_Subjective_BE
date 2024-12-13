@@ -17,8 +17,11 @@ class response_body:
 
 class scoreItem(BaseModel):
     course_id: str
+    course: str
+    course_type: str
     question_id: str
-    score: int
+    label: int
     comments: Optional[str]
     user_id: Optional[str]
     user_name: Optional[str]
+    seg_labels: str

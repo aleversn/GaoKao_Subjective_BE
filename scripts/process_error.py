@@ -6,7 +6,7 @@ from tools import *
 SOURCE_DIR = '../ProceedDataset/Bad_Student_Answer_Score_Dataset/ErrorType'
 files = os.listdir(SOURCE_DIR)
 
-ID_FILE = '../backend_data/question/ID_DICT.json'
+ID_FILE = '../backend_data/ID_DICT.json'
 with open(ID_FILE, 'r') as f:
     ID_DATA = json.load(f)
 

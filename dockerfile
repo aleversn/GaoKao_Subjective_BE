@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.2.0-cuda12.1-cudnn8-runtime as base
+FROM ubuntu/nginx:1.26-24.10_edge as base
 WORKDIR /app
 COPY . .
 EXPOSE 8000
