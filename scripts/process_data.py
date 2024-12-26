@@ -3,7 +3,7 @@ import os
 import json
 from tools import *
 
-SOURCE_DIR = '../ProceedDataset/Bad_Student_Answer_Dataset'
+SOURCE_DIR = '../ProceedDataset/Total_Student_Answer_Dataset'
 files = os.listdir(SOURCE_DIR)
 
 def denoise(ori, mask_newline=False):
