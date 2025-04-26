@@ -25,3 +25,13 @@ class scoreItem(BaseModel):
     user_id: Optional[str]
     user_name: Optional[str]
     seg_labels: str
+
+class answerItem(BaseModel):
+    course_id: str
+    course: str
+    course_type: str
+    question_id: str
+    answer: str
+    answer_idx: int = None
+    user_id: Optional[str] = None
+    user_name: Optional[str] = None
